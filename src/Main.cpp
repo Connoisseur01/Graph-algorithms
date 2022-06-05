@@ -1,39 +1,35 @@
 #include <iostream>
+#include "Matrix.hpp"
+#include "List.hpp"
+#include <time.h>
+#include "Edge.hpp"
+#include "Heap.hpp"
+#include "Kruskal.hpp"
 
 int main(){
-    return 0;
-}
 
-void menu(){
+    srand(time(NULL));
 
-    int option = 0;
-    while(1){
-        std::cout<<std::endl<<"choose the graph representation:"<<std::endl
-                            <<" [1] Incidence matrix"<<std::endl
-                            <<" [2] Adjacency list"<<std::endl
-                            <<"\n[3] exit";
-        std::cin>>option;
-        switch(option){
-            case 1:{
-                
+    Heap heap;
 
-                break;
-            }
+    List list;
+    list.read_txt("graph.txt");
 
-            case 2:{
+    std::vector<Edge> listEdges = list.get_edges();
+    heap.heap_sort_edges(listEdges);
+    
+    
+    Kruskal listKruskal(list.get_verticies());
+    listKruskal.MST(listEdges);
+   
+
+    Matrix matrix;
+    matrix.read_txt("graph.txt");
+
+    std::vector<Edge> matrixEdges = matrix.get_edges();
+    heap.heap_sort_edges(matrixEdges);
 
 
-                break;
-            }
-
-            case 3:{
-                return;
-            }
-
-            default:{
-                std::cout<<"\nWrong input! Try again";
-                break;
-            }
-        }
-    }
+    Kruskal matrixKruskal(matrix.get_verticies());
+    matrixKruskal.MST(matrixEdges);
 }
