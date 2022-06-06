@@ -7,7 +7,7 @@ class Kruskal{
 
     public:
 
-       Kruskal(int verticies){this->verticies = verticies;};
+       Kruskal(int verticies);
        ~Kruskal(){delete[] parent; delete[] rank;};
 
        void MST(std::vector<Edge> sortedEdges);
@@ -17,9 +17,9 @@ class Kruskal{
 
     int verticies = 0;
 
-    int* parent = new int[verticies];
+    int* parent;
 
-    int* rank = new int[verticies];
+    int* rank;
 
     void initialize_DSU();
 

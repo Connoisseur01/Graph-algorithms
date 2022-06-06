@@ -2,6 +2,12 @@
 #include "List.hpp"
 #include <iostream>
 
+Kruskal::Kruskal(int verticies){
+    this->verticies = verticies;
+    parent = new int[verticies];
+    rank = new int[verticies];
+}
+
 void Kruskal::make_set(int v){
     parent[v] = v;
     rank[v] = 0;

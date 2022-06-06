@@ -5,31 +5,25 @@
 #include "Edge.hpp"
 #include "Heap.hpp"
 #include "Kruskal.hpp"
+#include "Prim.hpp"
+#include "BellmanFord.hpp"
 
 int main(){
 
     srand(time(NULL));
 
-    Heap heap;
-
-    List list;
-    list.read_txt("graph.txt");
-
-    std::vector<Edge> listEdges = list.get_edges();
-    heap.heap_sort_edges(listEdges);
-    
-    
-    Kruskal listKruskal(list.get_verticies());
-    listKruskal.MST(listEdges);
    
 
     Matrix matrix;
     matrix.read_txt("graph.txt");
 
-    std::vector<Edge> matrixEdges = matrix.get_edges();
-    heap.heap_sort_edges(matrixEdges);
+    Prim prim(matrix.get_verticies());
 
+    prim.MST(matrix.to_adj(), 0);
 
-    Kruskal matrixKruskal(matrix.get_verticies());
-    matrixKruskal.MST(matrixEdges);
+    //List list;
+    //list.read_txt("graph.txt");
+
+    //BellmanFord bf(list.get_verticies());
+    //bf.shortest_path(list.get_edges(), 3);
 }
