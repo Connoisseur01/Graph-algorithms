@@ -5,6 +5,8 @@
 
 void List::read_txt(std::string filename){
 
+    list.clear();
+
     std::ifstream input(filename);
     if(!input.is_open()){
         std::cout<<"file did not open";
@@ -54,6 +56,8 @@ void List::print(){
 
 void List::generate_random(int edges, int density){
 
+    list.clear();
+
     this->edges = edges;
 
     list.empty();
@@ -82,6 +86,19 @@ void List::generate_random(int edges, int density){
         edge.weight = weight;
         list[v1].push_back(edge);
     } 
+}
+
+std::vector<std::vector<Edge>> List::get_non_directed_adjecency_list(){
+
+    std::vector<std::vector<Edge>> result = list;
+    for(int i = 0; i < verticies; i++){
+        for(int k = 0; k < list[i].size(); k++){
+            Edge e = list[i][k];
+            std::swap(e.x, e.y);
+            result[e.x].push_back(e);
+        }
+    }
+    return result;
 }
 
 std::vector<Edge> List::get_edges(){
