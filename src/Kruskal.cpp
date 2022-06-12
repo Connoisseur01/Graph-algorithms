@@ -31,24 +31,54 @@ void Kruskal::unite_sets(int a, int b){
     }
 }
 
+void Kruskal::print_edges(std::vector<Edge> edges){
+    int sumOfweights = 0;
 
-void Kruskal::MST(std::vector<Edge> sortedEdges){
+    std::cout<<'\n';
+    for(int i=0; i < edges.size(); i++){
+        sumOfweights += edges[i].weight;
+        std::cout<< edges[i].x << " -- " << edges[i].y << " weight = " << edges[i].weight<<'\n';
+    }
+
+    std::cout<<"\ntotal weight: "<<sumOfweights;
+}
+
+
+List Kruskal::list_MST(std::vector<Edge> sortedEdges){
+
+    List result(verticies);
 
     for(int i = 0; i < verticies; i++){
         make_set(i);
     }
 
-    int sumOfweights = 0;
 
-    std::cout<<'\n';
     for(int i = 0; i < sortedEdges.size(); i++){
 
         if (find_set(sortedEdges[i].x) != find_set(sortedEdges[i].y)) {
                 unite_sets(sortedEdges[i].x, sortedEdges[i].y);
-                sumOfweights += sortedEdges[i].weight;
-                std::cout<< sortedEdges[i].x << " -- " << sortedEdges[i].y << " weight = " << sortedEdges[i].weight<<'\n';
+                
+                result.add_edge(sortedEdges[i].x, sortedEdges[i].y, sortedEdges[i].weight);
         }
     }
-    std::cout<<'\n'<<"total weight: "<<sumOfweights<<'\n';
+    return result;
 }
 
+Matrix Kruskal::matrix_MST(std::vector<Edge> sortedEdges){
+    Matrix result(verticies, verticies-1);
+
+    for(int i = 0; i < verticies; i++){
+        make_set(i);
+    }
+
+
+    for(int i = 0; i < sortedEdges.size(); i++){
+
+        if (find_set(sortedEdges[i].x) != find_set(sortedEdges[i].y)) {
+                unite_sets(sortedEdges[i].x, sortedEdges[i].y);
+                
+                result.add_edge(sortedEdges[i].x, sortedEdges[i].y, sortedEdges[i].weight);
+        }
+    }
+    return result;
+}

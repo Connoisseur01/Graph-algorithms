@@ -15,10 +15,15 @@ class Prim{
 
         Prim(int verticies){this->verticies = verticies;};
 
-        void MST(std::vector<std::vector<Edge>> adj, int start);
+        void print_edges(std::vector<Edge> edges);
+
+        List list_MST(std::vector<std::vector<Edge>> adj, int start = 0);
+
+        Matrix matrix_MST(std::vector<Edge> edges, int start = 0);
 
     private:
 
+        std::vector<Edge> get_vertex_edges(int vertex, std::vector<Edge> edgeList);
 
         int verticies = 0;
 

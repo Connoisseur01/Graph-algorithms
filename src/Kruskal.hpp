@@ -1,5 +1,6 @@
 #pragma once
 #include "List.hpp"
+#include "Matrix.hpp"
 
 
 
@@ -10,7 +11,11 @@ class Kruskal{
        Kruskal(int verticies);
        ~Kruskal(){delete[] parent; delete[] rank;};
 
-       void MST(std::vector<Edge> sortedEdges);
+       void print_edges(std::vector<Edge> edges);
+
+       List list_MST(std::vector<Edge> sortedEdges);
+
+       Matrix matrix_MST(std::vector<Edge> sortedEdges);
 
 
     private:

@@ -3,6 +3,14 @@
 #include <fstream>
 #include <time.h>
 
+List::List(int verticies){
+    this->verticies = verticies;
+    for(int i = 0; i < verticies; i++){
+        std::vector<Edge> vertex;
+        list.push_back(vertex);
+    }
+    }
+
 void List::read_txt(std::string filename){
 
     list.clear();
@@ -41,9 +49,12 @@ void List::read_txt(std::string filename){
     input.close();
 }
 
+void List::add_edge(int vertex, int dest, int weight){
+    list[vertex].push_back({vertex, dest, weight});
+}
+
 void List::print(){
     
-    std::cout<<"edge = (end_vertex, weight)\n\n";
 
     for(int i = 0; i < verticies; i++){
         std::cout<< i <<" = [";
@@ -54,38 +65,17 @@ void List::print(){
     }
 }
 
-void List::generate_random(int edges, int density){
+void List::print_non_directed(){
 
-    list.clear();
-
-    this->edges = edges;
-
-    list.empty();
-
-    verticies = (edges*100)/density;
+    std::vector<std::vector<Edge>> nd = get_non_directed_adjecency_list();
 
     for(int i = 0; i < verticies; i++){
-        std::vector<Edge> vertex;
-        list.push_back(vertex);
+        std::cout<< i <<" = [";
+        for(int k = 0; k < nd[i].size(); k++){
+            std::cout<<"("<<nd[i][k].y<<", "<<nd[i][k].weight<<") ";
+        }
+        std::cout<<"]\n";
     }
-
-    int v1 = 0, v2 = 0, weight;
-
-    for(int i = 0; i < edges; i++){
-        
-        v1 = rand() % verticies;
-        
-        do{
-            v2 = rand() % verticies;
-        }while(v1 == v2);
-
-        weight = rand() % 30;
-        Edge edge;
-        edge.x = v1;
-        edge.y = v2;
-        edge.weight = weight;
-        list[v1].push_back(edge);
-    } 
 }
 
 std::vector<std::vector<Edge>> List::get_non_directed_adjecency_list(){
@@ -99,6 +89,15 @@ std::vector<std::vector<Edge>> List::get_non_directed_adjecency_list(){
         }
     }
     return result;
+}
+
+void List::set_verticies(int verticies){
+    this->verticies = verticies;
+
+    for(int i = 0; i < verticies; i++){
+        std::vector<Edge> vertex;
+        list.push_back(vertex);
+    }
 }
 
 std::vector<Edge> List::get_edges(){

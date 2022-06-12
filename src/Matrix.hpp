@@ -5,29 +5,33 @@
 
 class Matrix{
     public:
-        //Matrix();
-       // ~Matrix();
+        Matrix(int verticies = 0, int edges = 0);
 
-        void add_edge(int v1, int v2, int weight);
+        void add_edge(int v1, int v2, int weight); //adds edge to matrix
 
-        void read_txt(std::string filename);
+        void read_txt(std::string filename); //reads matrix from txt file
 
-        void generate_random(int edges, int density);
+        std::vector<Edge> get_edges(); //return list of edges
 
-        std::vector<Edge> get_edges();
+        void print(); // print graph
 
-        std::vector<Edge> get_vertex_edges(int vertex);
+        void print_non_directed(); // print graph as non directed
 
-        void print();
+        int get_verticies(){return verticies;};  //return vertices count
 
-        int get_verticies(){return verticies;}; 
+        std::vector<Edge> get_non_directed_edges(); //return list of non directed edges
 
-        std::vector<std::vector<Edge>> to_adj();
+        void clear(){matrix.clear();}; //clear matrix graph
 
+        void set_edges(int edges){this->edges = edges;}; //set number of edges
+
+        void set_verticies(int verticies); // set number of vertices
+
+        bool is_empty(){return matrix.empty();}; // return 1 if empty
 
     private:
 
-        int edges = 0, verticies = 0;
+        int edges, verticies;
         std::vector<std::vector<int>> matrix;
 };
 

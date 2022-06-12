@@ -7,22 +7,31 @@
 class List{
     public:
 
-       // List();
+       List(int verticies = 0);
        // ~List();
 
-        void read_txt(std::string filepath);
+        void read_txt(std::string filepath); // read graph from text file
 
-        void print();
+        void print(); // print list
 
-        std::vector<Edge> get_edges();
+        void print_non_directed(); // print list as non directed
 
-        void generate_random(int vertex_number, int density);
+        std::vector<Edge> get_edges(); //return list of edges
 
         int get_verticies(){return verticies;};
 
-        std::vector<std::vector<Edge>> get_adjecency_list(){return list;};
-        std::vector<std::vector<Edge>> get_non_directed_adjecency_list();
+        void add_edge(int vertex, int dest, int weight); 
+
+        std::vector<std::vector<Edge>> get_adjecency_list(){return list;}; //get adjency list
+        std::vector<std::vector<Edge>> get_non_directed_adjecency_list(); // get adjency list converted to non directed
         
+        void clear(){list.clear();}; //clear list graph
+
+        void set_edges(int edges){this->edges = edges;}; //set edges number
+
+        void set_verticies(int verticies); // set vertices number
+
+        bool is_empty(){return list.empty();}; //return true if empty
 
     private:
 

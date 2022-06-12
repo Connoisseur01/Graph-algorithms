@@ -2,11 +2,22 @@
 #include <fstream>
 #include <iostream>
 #include <time.h>
+#include <iomanip>
 #include "Edge.hpp"
+
+Matrix::Matrix(int verticies, int edges){
+    this->verticies = verticies;
+    this->edges = edges;
+
+    for(int i = 0; i < verticies; i++){
+        std::vector<int> vertex;
+        matrix.push_back(vertex);
+    }
+}
 
 void Matrix::read_txt(std::string filename){
 
-    matrix.empty();
+    matrix.clear();
 
     std::ifstream input(filename);
     if(!input.is_open()){
@@ -53,40 +64,30 @@ void Matrix::add_edge(int v1, int v2, int weight){
 void Matrix::print(){
 
     for(int i = 0; i < verticies; i++){
-        std::cout<<i<<" |";
+        std::cout<<i<<" |"<<std::setw(3);
         for(int k = 0; k < edges; k++){
-            std::cout<<" "<<matrix[i][k]<<" ";
+            std::cout<<matrix[i][k]<<std::setw(4);
         }
         std::cout<<"|\n";
     }
 }
 
-void Matrix::generate_random(int edges, int density){
+void Matrix::print_non_directed(){
+    for(int i = 0; i < verticies; i++){
+        std::cout<<i<<" |"<<std::setw(2);
+        for(int k = 0; k < edges; k++){
+            std::cout<<abs(matrix[i][k])<<std::setw(4);
+        }
+        std::cout<<"|\n";
+    }
+}
 
-    this->edges = edges;
-
-    matrix.empty();
-
-    verticies = (edges*100)/density;
+void Matrix::set_verticies(int verticies){
+    this->verticies = verticies;
 
     for(int i = 0; i < verticies; i++){
         std::vector<int> vertex;
         matrix.push_back(vertex);
-    }
-
-    int v1 = 0, v2 = 0, weight;
-
-    for(int i = 0; i < edges; i++){
-
-        v1 = rand() % verticies;
-
-        do{
-            v2 = rand() % verticies;
-        }while(v2 == v1);
-
-        weight = rand() % 30;
-
-        add_edge(v1, v2, weight);
     }
 }
 
@@ -113,4 +114,19 @@ std::vector<Edge> Matrix::get_edges(){
 
     return edgeList;
 } 
+
+std::vector<Edge> Matrix::get_non_directed_edges(){
+
+    std::vector<Edge> result = get_edges();
+
+    for(int i = 0; i < edges; i++){
+        int v2 = result[i].x;
+        int v1 = result[i].y;
+        int weight = result[i].weight;
+
+        result.push_back({v1, v2, weight});
+    }    
+
+    return result;
+}
 
